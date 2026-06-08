@@ -77,9 +77,6 @@ function renderLandingPage() {
       </div>
     </section>
 
-    <!-- Adsterra Native Banner - Between Hero & Documents -->
-    <div class="adsterra-native" id="adsterra-native-1"></div>
-
     <section class="section" id="documents">
       <div class="container">
         <h2 class="section-title"><span class="gradient-text">Pilih Dokumen</span></h2>
@@ -125,9 +122,6 @@ function renderLandingPage() {
         </div>
       </div>
     </section>
-
-    <!-- Adsterra Native Banner - Between Steps & Premium -->
-    <div class="adsterra-native" id="adsterra-native-2"></div>
 
     <!-- Testimonials / Social Proof -->
     <section class="section" id="testimonials">
@@ -197,9 +191,6 @@ function renderLandingPage() {
         </div>
       </div>
     </section>
-
-    <!-- Adsterra Native Banner - Bottom -->
-    <div class="adsterra-native" id="adsterra-native-3"></div>
 
     <!-- FAQ Section for SEO -->
     <section class="section section-alt" id="faq">
