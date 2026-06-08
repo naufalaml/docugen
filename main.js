@@ -171,32 +171,6 @@ function renderLandingPage() {
       </div>
     </section>
 
-    <section class="section section-alt" id="partners">
-      <div class="container">
-        <h2 class="section-title"><span class="gradient-text">Rekomendasi Untuk Kamu</span></h2>
-        <p class="section-subtitle">Layanan terpercaya untuk mendukung karir dan kebutuhan dokumenmu</p>
-        <div class="affiliate-grid">
-          <div class="affiliate-card glass">
-            <div class="affiliate-icon" style="background: linear-gradient(135deg, #06b6d4, #0891b2);"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg></div>
-            <h3>Jasa Cetak Dokumen</h3>
-            <p>Cetak dokumen berkualitas tinggi dengan harga terjangkau.</p>
-            <a href="#" class="btn btn-ghost btn-sm">Kunjungi →</a>
-          </div>
-          <div class="affiliate-card glass">
-            <div class="affiliate-icon" style="background: linear-gradient(135deg, #7c3aed, #6366f1);"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5"><path d="M20 7h-9"/><path d="M14 17H5"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="7" r="3"/></svg></div>
-            <h3>Platform Rekrutmen</h3>
-            <p>Temukan lowongan kerja impianmu di platform terpercaya.</p>
-            <a href="#" class="btn btn-ghost btn-sm">Kunjungi →</a>
-          </div>
-          <div class="affiliate-card glass">
-            <div class="affiliate-icon" style="background: linear-gradient(135deg, #f59e0b, #d97706);"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 10 3 12 0v-5"/></svg></div>
-            <h3>Kursus Online</h3>
-            <p>Tingkatkan skill dengan kursus online bersertifikat.</p>
-            <a href="#" class="btn btn-ghost btn-sm">Kunjungi →</a>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <!-- Adsterra Native Banner - Bottom -->
     <div class="adsterra-native" id="adsterra-native-3"></div>
