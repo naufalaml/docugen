@@ -166,16 +166,11 @@ export function renderGeneratorPage(type) {
 function renderTemplateSwitcher(templates) {
   if (!templates || templates.length === 0) return '';
   
-  const user = getCurrentUser();
-  const isPremium = user && user.accountType === 'premium';
-  
   return templates.map(t => {
-    const isLocked = t.premium && !isPremium;
     return `
-      <button class="template-option ${t.id === currentTemplate ? 'active' : ''} ${isLocked ? 'premium-locked' : ''}"
-              data-template="${t.id}" data-premium="${t.premium}">
+      <button class="template-option ${t.id === currentTemplate ? 'active' : ''}"
+              data-template="${t.id}">
         <span class="template-name">${t.name}</span>
-        ${t.premium ? '<span class="badge badge-pro">PRO</span>' : '<span class="badge badge-free">GRATIS</span>'}
       </button>
     `;
   }).join('');
@@ -321,17 +316,6 @@ export function initGeneratorEvents() {
     templateSwitcher.addEventListener('click', (e) => {
       const btn = e.target.closest('.template-option');
       if (!btn) return;
-      
-      const isPremium = btn.dataset.premium === 'true';
-      const user = getCurrentUser();
-      const isUserPremium = user && user.accountType === 'premium';
-      
-      // If user wants to choose premium but isn't premium
-      if (isPremium && !isUserPremium) {
-        // Dispatch global custom event to trigger premium modal
-        document.dispatchEvent(new CustomEvent('premium:show-upgrade-modal'));
-        return;
-      }
       
       currentTemplate = btn.dataset.template;
       document.querySelectorAll('.template-option').forEach(b => b.classList.remove('active'));

@@ -162,13 +162,13 @@ function renderLandingPage() {
       <div class="container">
         <div class="premium-banner glass">
           <div class="premium-content">
-            <span class="badge badge-pro">PRO</span>
-            <h2>Template Premium</h2>
-            <p>Dapatkan akses ke template eksklusif dengan desain lebih profesional dan elegan.</p>
-            <button class="btn btn-premium" id="btn-landing-premium">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
-              Lihat Template Premium
-            </button>
+            <span class="badge badge-free">100% GRATIS</span>
+            <h2>Semua Template Bebas Biaya</h2>
+            <p>Kami berkomitmen menyediakan seluruh template dokumen secara gratis tanpa batasan. Dukung kami dengan membagikan website ini ke teman atau kerabat Anda!</p>
+            <a href="#documents" class="btn btn-primary">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              Mulai Buat Dokumen
+            </a>
           </div>
           <div class="premium-decoration"><div class="floating-doc"><svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg></div></div>
         </div>
@@ -230,18 +230,13 @@ function renderLandingPage() {
             <p class="faq-answer">Tentu! DocuGen responsive dan bisa digunakan dari smartphone, tablet, maupun laptop/desktop.</p>
           </details>
           <details class="faq-item glass">
-            <summary class="faq-question">Apa itu template premium?</summary>
-            <p class="faq-answer">Template premium adalah desain eksklusif dengan tampilan lebih profesional dan elegan. Fitur ini bisa diaktifkan melalui upgrade ke PRO.</p>
+            <summary class="faq-question">Apakah ada template berbayar (PRO)?</summary>
+            <p class="faq-answer">Tidak. Di DocuGen, semua template 100% gratis dan dapat digunakan secara bebas oleh siapa saja tanpa dipungut biaya.</p>
           </details>
         </div>
       </div>
     </section>
   `;
-
-  // Landing page specific events
-  document.getElementById('btn-landing-premium')?.addEventListener('click', () => {
-    showModal('#premium-modal');
-  });
 
   observeAnimations();
 }
@@ -273,8 +268,8 @@ async function handleDashboardRoute() {
           <img src="${user.photoURL}" alt="Avatar" class="profile-card-avatar">
           <div class="profile-card-name">${user.displayName}</div>
           <div class="profile-card-email">${user.email}</div>
-          <div class="badge-account ${user.accountType === 'premium' ? 'badge-account-premium' : 'badge-account-free'}">
-            ${user.accountType === 'premium' ? '👑 PRO' : 'FREE'}
+          <div class="badge-account badge-account-free">
+            MEMBER
           </div>
           
           <div class="profile-card-stats">
@@ -291,26 +286,8 @@ async function handleDashboardRoute() {
         
         <!-- Main Panel -->
         <div class="dashboard-content-panel">
-          <!-- Upgrade Panel -->
-          ${user.accountType !== 'premium' ? `
-            <div class="billing-upgrade-banner glass animate-fade-in">
-              <div class="billing-upgrade-info">
-                <h4>Aktifkan Keanggotaan PRO 👑</h4>
-                <p>Buka semua template eksklusif, unduh PDF berkualitas tinggi, simpan cloud sepuasnya, dan hapus semua iklan.</p>
-              </div>
-              <button class="btn btn-premium" id="btn-upgrade-dashboard">Upgrade PRO</button>
-            </div>
-          ` : `
-            <div class="billing-upgrade-banner glass animate-fade-in" style="border-color: var(--success);">
-              <div class="billing-upgrade-info">
-                <h4>Selamat! Akun PRO Aktif 🎉</h4>
-                <p>Seluruh fitur premium Anda telah aktif selamanya. Terima kasih atas dukungan Anda!</p>
-              </div>
-            </div>
-          `}
-          
           <!-- Drafts Panel -->
-          <div class="content-card glass animate-fade-in" style="--delay: 0.1s">
+          <div class="content-card glass animate-fade-in">
             <div class="content-card-header">
               <h3>Draf Dokumen Anda</h3>
             </div>
@@ -322,11 +299,6 @@ async function handleDashboardRoute() {
       </div>
     </div>
   `;
-
-  // Attach upgrade handler
-  document.getElementById('btn-upgrade-dashboard')?.addEventListener('click', () => {
-    showModal('#premium-modal');
-  });
 
   // Load and render user drafts
   await loadAndRenderDrafts(user);
