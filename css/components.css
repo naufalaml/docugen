@@ -1044,6 +1044,10 @@
   padding: 0 var(--space-lg);
 }
 
+.adsterra-native:empty {
+  display: none;
+}
+
 .adsterra-top {
   text-align: center;
   margin-top: 64px;

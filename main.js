@@ -78,9 +78,7 @@ function renderLandingPage() {
     </section>
 
     <!-- Adsterra Native Banner - Between Hero & Documents -->
-    <div class="adsterra-native" id="adsterra-native-1">
-      <div class="ad-slot ad-slot-banner"><span class="ad-label">Adsterra Ad Space</span></div>
-    </div>
+    <div class="adsterra-native" id="adsterra-native-1"></div>
 
     <section class="section" id="documents">
       <div class="container">
@@ -129,9 +127,7 @@ function renderLandingPage() {
     </section>
 
     <!-- Adsterra Native Banner - Between Steps & Premium -->
-    <div class="adsterra-native" id="adsterra-native-2">
-      <div class="ad-slot ad-slot-banner"><span class="ad-label">Adsterra Ad Space</span></div>
-    </div>
+    <div class="adsterra-native" id="adsterra-native-2"></div>
 
     <!-- Testimonials / Social Proof -->
     <section class="section" id="testimonials">
@@ -203,9 +199,7 @@ function renderLandingPage() {
     </section>
 
     <!-- Adsterra Native Banner - Bottom -->
-    <div class="adsterra-native" id="adsterra-native-3">
-      <div class="ad-slot ad-slot-banner"><span class="ad-label">Adsterra Ad Space</span></div>
-    </div>
+    <div class="adsterra-native" id="adsterra-native-3"></div>
 
     <!-- FAQ Section for SEO -->
     <section class="section section-alt" id="faq">
