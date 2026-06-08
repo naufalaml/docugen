@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DocuGen - Generator Dokumen Gratis | Surat Lamaran, CV ATS, Surat Kuasa</title>
+  <meta name="description" content="Buat surat lamaran kerja, CV ATS-friendly, surat pengunduran diri, surat izin, dan surat kuasa secara online gratis. Download PDF siap cetak dalam hitungan detik.">
+  <meta name="keywords" content="generator surat, surat lamaran kerja, CV ATS, template surat resign, surat izin, surat kuasa, buat surat online gratis, generator dokumen Indonesia">
+  <meta name="author" content="DocuGen">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="DocuGen - Generator Dokumen Profesional Gratis">
+  <meta property="og:description" content="Buat dokumen profesional dalam hitungan detik. Isi form, download PDF siap cetak.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="id_ID">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="DocuGen - Generator Dokumen Gratis">
+  <meta name="twitter:description" content="Buat surat lamaran, CV ATS, surat kuasa online gratis. Download PDF siap cetak.">
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://docugen.id">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📄</text></svg>">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/generator.css">
+
+  <!-- html2pdf.js via CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.2/html2pdf.bundle.min.js" defer></script>
+
+  <!-- ============================== -->
+  <!-- ADSTERRA ADS INTEGRATION       -->
+  <!-- ============================== -->
+  <!-- 
+    CARA SETUP ADSTERRA:
+    1. Daftar di https://www.adsterra.com (gratis)
+    2. Tambahkan website kamu di dashboard Adsterra
+    3. Pilih jenis iklan yang diinginkan:
+       - Banner Ads (728x90, 300x250, 468x60)
+       - Popunder Ads (penghasilan paling tinggi)
+       - Native Ads (paling tidak mengganggu)
+       - Social Bar (floating notification ads)
+       - Direct Link (link iklan langsung)
+    4. Copy script dari Adsterra dan ganti placeholder di bawah ini
+
+    CONTOH: Untuk Social Bar (recommended - high CPM):
+    <script async src="//pl.adsterra.com/KODE_KAMU.js"></script>
+    
+    CONTOH: Untuk Popunder:
+    <script async src="//pl.adsterra.com/KODE_POPUNDER.js"></script>
+  -->
+
+  <!-- Adsterra Social Bar - GANTI dengan kode dari Adsterra dashboard -->
+  <!-- <script async src="//pl.adsterra.com/YOUR_SOCIAL_BAR_CODE.js"></script> -->
+
+  <!-- Adsterra Popunder - GANTI dengan kode dari Adsterra dashboard -->
+  <!-- <script async src="//pl.adsterra.com/YOUR_POPUNDER_CODE.js"></script> -->
+
+  <!-- Structured Data for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "DocuGen",
+    "description": "Generator dokumen otomatis Indonesia - Buat surat lamaran, CV ATS, surat kuasa online gratis",
+    "url": "https://docugen.id",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "IDR"
+    }
+  }
+  </script>
+</head>
+<body>
+
+  <!-- ========== NAVBAR ========== -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar-inner">
+      <a href="#/" class="navbar-logo" id="logo">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <span>DocuGen</span>
+      </a>
+
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#documents" id="nav-documents">Dokumen</a></li>
+        <li><a href="#how-it-works" id="nav-how">Cara Kerja</a></li>
+        <li><a href="#premium" id="nav-premium">Premium</a></li>
+        <li><a href="#partners" id="nav-partners">Rekomendasi</a></li>
+      </ul>
+
+      <div class="navbar-actions">
+        <button class="theme-toggle" id="theme-toggle" aria-label="Ganti tema gelap/terang">
+          <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" x2="12" y1="1" y2="3"/><line x1="12" x2="12" y1="21" y2="23"/><line x1="4.22" x2="5.64" y1="4.22" y2="5.64"/><line x1="18.36" x2="19.78" y1="18.36" y2="19.78"/><line x1="1" x2="3" y1="12" y2="12"/><line x1="21" x2="23" y1="12" y2="12"/><line x1="4.22" x2="5.64" y1="19.78" y2="18.36"/><line x1="18.36" x2="19.78" y1="5.64" y2="4.22"/></svg>
+          <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ========== ADSTERRA TOP BANNER ========== -->
+  <!-- Ganti div ini dengan kode banner 728x90 dari Adsterra -->
+  <div class="adsterra-top" id="adsterra-top">
+    <!--
+    PASTE KODE BANNER ADSTERRA 728x90 DI SINI
+    Contoh:
+    <script async="async" data-cfasync="false" src="//pl.adsterra.com/YOUR_BANNER_CODE.js"></script>
+    -->
+  </div>
+
+  <!-- ========== MAIN CONTENT ========== -->
+  <main id="main-content">
+    <!-- Content rendered by JS -->
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#/" class="navbar-logo">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <span>DocuGen</span>
+          </a>
+          <p>Generator dokumen otomatis Indonesia. Buat surat lamaran, CV, dan dokumen profesional lainnya secara gratis. Tanpa daftar, tanpa ribet.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Dokumen</h4>
+          <ul>
+            <li><a href="#/generator/surat-lamaran" id="ft-lamaran">Surat Lamaran</a></li>
+            <li><a href="#/generator/cv-ats" id="ft-cv">CV ATS</a></li>
+            <li><a href="#/generator/surat-resign" id="ft-resign">Surat Resign</a></li>
+            <li><a href="#/generator/surat-izin" id="ft-izin">Surat Izin</a></li>
+            <li><a href="#/generator/surat-kuasa" id="ft-kuasa">Surat Kuasa</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Tentang</h4>
+          <ul>
+            <li><a href="#how-it-works">Cara Kerja</a></li>
+            <li><a href="#premium">Premium</a></li>
+            <li><a href="#" id="ft-privacy">Kebijakan Privasi</a></li>
+            <li><a href="#" id="ft-terms">Syarat & Ketentuan</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Rekomendasi</h4>
+          <ul>
+            <li><a href="#" id="ft-cetak">Jasa Cetak</a></li>
+            <li><a href="#" id="ft-kerja">Platform Kerja</a></li>
+            <li><a href="#" id="ft-kursus">Kursus Online</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Adsterra Footer Banner -->
+      <div class="adsterra-footer" id="adsterra-footer">
+        <!--
+        PASTE KODE BANNER ADSTERRA 468x60 atau 728x90 DI SINI
+        -->
+      </div>
+
+      <div class="footer-bottom">
+        <span>&copy; 2025 DocuGen. All rights reserved.</span>
+        <span>Made with ❤️ in Indonesia</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========== APP SCRIPT ========== -->
+  <script type="module" src="main.js"></script>
+
+  <!-- ========== ADSTERRA NATIVE ADS SCRIPT ========== -->
+  <!--
+  Untuk Native Banner Ads di dalam konten, paste kode Adsterra Native di sini.
+  Native ads akan muncul di slot #adsterra-native-* yang sudah disiapkan di landing page.
+  -->
+
+</body>
+</html>

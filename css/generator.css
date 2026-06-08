@@ -1,0 +1,391 @@
+/* ============================================
+   DocuGen - Generator Page Styles
+   ============================================ */
+
+/* Generator Page Layout */
+.generator-page {
+  padding-top: 80px;
+  min-height: 100vh;
+}
+
+.generator-header {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-xl) var(--space-lg) var(--space-md);
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin-bottom: var(--space-md);
+  transition: all var(--transition-fast);
+}
+
+.back-link:hover {
+  color: var(--accent-primary);
+  gap: var(--space-sm);
+}
+
+.generator-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  font-size: var(--text-3xl);
+}
+
+.generator-icon {
+  display: flex;
+  align-items: center;
+}
+
+/* Template Switcher */
+.template-switcher {
+  display: flex;
+  gap: var(--space-sm);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-lg) var(--space-lg);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.template-switcher::-webkit-scrollbar {
+  display: none;
+}
+
+.template-option {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all var(--transition-fast);
+  font-family: var(--font-body);
+}
+
+.template-option:hover:not(:disabled) {
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+}
+
+.template-option.active {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: white;
+}
+
+.template-option.premium-locked {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ============================================
+   Split Panel Layout
+   ============================================ */
+.generator-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: var(--space-lg);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-lg);
+  align-items: start;
+}
+
+/* Form Panel */
+.form-panel {
+  border-radius: var(--radius-xl);
+  padding: var(--space-xl);
+  position: sticky;
+  top: 80px;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+}
+
+.form-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-xl);
+  padding-bottom: var(--space-md);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.form-panel-header h2 {
+  font-size: var(--text-xl);
+}
+
+.form-actions {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+/* Form Sections */
+.form-section {
+  margin-bottom: var(--space-lg);
+}
+
+.form-section-title {
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--accent-tertiary);
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-xs);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+/* Repeatable Groups */
+.repeatable-group {
+  margin-bottom: var(--space-lg);
+}
+
+.repeatable-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-md);
+}
+
+.repeatable-header h4 {
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--accent-tertiary);
+}
+
+.repeatable-item {
+  padding: var(--space-md);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-md);
+  background: rgba(0, 0, 0, 0.1);
+  transition: all var(--transition-base);
+}
+
+[data-theme="light"] .repeatable-item {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.repeatable-item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-sm);
+}
+
+.repeatable-index {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--accent-primary);
+  background: rgba(124, 58, 237, 0.1);
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-full);
+}
+
+.btn-remove-repeat {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--radius-full);
+  border: none;
+  background: rgba(244, 63, 94, 0.1);
+  color: var(--error);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-remove-repeat:hover {
+  background: var(--error);
+  color: white;
+}
+
+.repeatable-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-md);
+}
+
+.repeatable-fields .form-group {
+  flex: 1;
+  min-width: 180px;
+}
+
+/* ============================================
+   Preview Panel
+   ============================================ */
+.preview-panel {
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--glass-border);
+}
+
+.preview-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md) var(--space-lg);
+  background: var(--glass-bg);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.preview-label {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.preview-actions {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.btn-download {
+  padding: 0.6rem 1.5rem !important;
+}
+
+/* Preview Scroll Area */
+.preview-scroll {
+  padding: var(--space-xl);
+  overflow-y: auto;
+  max-height: calc(100vh - 160px);
+  display: flex;
+  justify-content: center;
+  background: repeating-conic-gradient(
+    rgba(128, 128, 128, 0.05) 0% 25%, 
+    transparent 0% 50%
+  ) 50% / 20px 20px;
+}
+
+/* A4 Paper Simulation */
+.a4-paper {
+  width: 210mm;
+  min-height: 297mm;
+  background: white;
+  color: #1a1a1a;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+  padding: 20mm 25mm;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 12pt;
+  line-height: 1.6;
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* Ensure PDF text is always dark */
+.a4-paper * {
+  color: #1a1a1a !important;
+}
+
+.a4-paper h1, .a4-paper h2, .a4-paper h3 {
+  color: #000 !important;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+/* Error State */
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4xl);
+  text-align: center;
+  gap: var(--space-md);
+}
+
+.error-state h2 {
+  font-size: var(--text-2xl);
+}
+
+.error-state p {
+  color: var(--text-secondary);
+}
+
+/* Generator Ad Slot */
+.ad-slot-generator {
+  max-width: 1200px;
+  margin: var(--space-2xl) auto;
+}
+
+/* ============================================
+   Responsive - Mobile Stack Layout
+   ============================================ */
+@media (max-width: 968px) {
+  .generator-layout {
+    grid-template-columns: 1fr;
+  }
+  
+  .form-panel {
+    position: static;
+    max-height: none;
+  }
+  
+  .preview-scroll {
+    max-height: 600px;
+  }
+  
+  .a4-paper {
+    width: 100%;
+    min-height: auto;
+    padding: 10mm 12mm;
+    font-size: 10pt;
+  }
+}
+
+@media (max-width: 480px) {
+  .generator-header {
+    padding: var(--space-md);
+  }
+  
+  .generator-title {
+    font-size: var(--text-xl);
+  }
+  
+  .template-switcher {
+    padding: 0 var(--space-md) var(--space-md);
+  }
+  
+  .generator-layout {
+    padding: 0 var(--space-md);
+  }
+  
+  .form-panel {
+    padding: var(--space-md);
+  }
+}
+
+/* ============================================
+   Print Styles
+   ============================================ */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  
+  .a4-paper,
+  .a4-paper * {
+    visibility: visible;
+  }
+  
+  .a4-paper {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 210mm;
+    min-height: 297mm;
+    padding: 20mm 25mm;
+    box-shadow: none;
+    border: none;
+  }
+}
