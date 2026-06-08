@@ -5,6 +5,7 @@
 
 import { saveDraft, loadDraft, clearDraft } from './utils/storage.js';
 import { downloadPDF, formatFilename } from './pdf.js';
+import { saveDraftCloud, getCurrentUser } from './utils/auth.js';
 
 // Document type registry - will be populated by template imports
 const documentTypes = {};
@@ -108,7 +109,19 @@ export function renderGeneratorPage(type) {
         ${renderTemplateSwitcher(docConfig.templateOptions)}
       </div>
 
-      <div class="generator-layout">
+      <!-- Mobile Sticky Tabs -->
+      <div class="mobile-tabs-container">
+        <button class="mobile-tab-btn active" data-tab="form">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+          Isi Data
+        </button>
+        <button class="mobile-tab-btn" data-tab="preview">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+          Lihat PDF
+        </button>
+      </div>
+
+      <div class="generator-layout" data-active-tab="form">
         <div class="form-panel glass" id="form-panel">
           <div class="form-panel-header">
             <h2>Isi Data</h2>
@@ -153,13 +166,19 @@ export function renderGeneratorPage(type) {
 function renderTemplateSwitcher(templates) {
   if (!templates || templates.length === 0) return '';
   
-  return templates.map(t => `
-    <button class="template-option ${t.id === currentTemplate ? 'active' : ''} ${t.premium ? 'premium-locked' : ''}"
-            data-template="${t.id}" ${t.premium ? 'disabled' : ''}>
-      <span class="template-name">${t.name}</span>
-      ${t.premium ? '<span class="badge badge-pro">PRO</span>' : '<span class="badge badge-free">GRATIS</span>'}
-    </button>
-  `).join('');
+  const user = getCurrentUser();
+  const isPremium = user && user.accountType === 'premium';
+  
+  return templates.map(t => {
+    const isLocked = t.premium && !isPremium;
+    return `
+      <button class="template-option ${t.id === currentTemplate ? 'active' : ''} ${isLocked ? 'premium-locked' : ''}"
+              data-template="${t.id}" data-premium="${t.premium}">
+        <span class="template-name">${t.name}</span>
+        ${t.premium ? '<span class="badge badge-pro">PRO</span>' : '<span class="badge badge-free">GRATIS</span>'}
+      </button>
+    `;
+  }).join('');
 }
 
 function renderFormFields(fields, data = {}) {
@@ -290,6 +309,7 @@ export function initGeneratorEvents() {
   const updatePreview = debounce(() => {
     const data = getFormData();
     saveDraft(currentType, data);
+    saveDraftCloud(currentType, data); // Cloud synchronization
     preview.innerHTML = docConfig.generateHTML(data, currentTemplate);
   }, 250);
 
@@ -300,12 +320,42 @@ export function initGeneratorEvents() {
   if (templateSwitcher) {
     templateSwitcher.addEventListener('click', (e) => {
       const btn = e.target.closest('.template-option');
-      if (!btn || btn.disabled) return;
+      if (!btn) return;
+      
+      const isPremium = btn.dataset.premium === 'true';
+      const user = getCurrentUser();
+      const isUserPremium = user && user.accountType === 'premium';
+      
+      // If user wants to choose premium but isn't premium
+      if (isPremium && !isUserPremium) {
+        // Dispatch global custom event to trigger premium modal
+        document.dispatchEvent(new CustomEvent('premium:show-upgrade-modal'));
+        return;
+      }
       
       currentTemplate = btn.dataset.template;
       document.querySelectorAll('.template-option').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       updatePreview();
+    });
+  }
+
+  // Mobile Sticky Tabs Switcher logic
+  const layout = document.querySelector('.generator-layout');
+  const tabBtns = document.querySelectorAll('.mobile-tab-btn');
+  if (layout && tabBtns.length > 0) {
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tab = btn.dataset.tab;
+        layout.setAttribute('data-active-tab', tab);
+        tabBtns.forEach(b => b.classList.toggle('active', b === btn));
+        
+        if (tab === 'preview') {
+          // Force preview content update
+          const data = getFormData();
+          preview.innerHTML = docConfig.generateHTML(data, currentTemplate);
+        }
+      });
     });
   }
 

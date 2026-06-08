@@ -4,7 +4,21 @@
 
 import { initRouter, registerRoute } from './js/router.js';
 import { initTheme, toggleTheme } from './js/utils/theme.js';
-import { registerDocumentType, getDocumentTypes, renderGeneratorPage, initGeneratorEvents } from './js/generator.js';
+import { registerDocumentType, getDocumentTypes, renderGeneratorPage, initGeneratorEvents, showToast } from './js/generator.js';
+
+// Import Auth & Backend functions
+import { 
+  initAuth, 
+  getCurrentUser, 
+  signInWithGoogle, 
+  signUpWithEmail, 
+  loginWithEmail, 
+  signOutUser, 
+  upgradeToPremium, 
+  getDraftsCloud, 
+  deleteDraftCloud,
+  isFirebaseConfigured
+} from './js/utils/auth.js';
 
 import { formFields as lamaranFields, generateHTML as lamaranHTML, templateOptions as lamaranTemplates } from './js/templates/surat-lamaran.js';
 import { formFields as cvFields, generateHTML as cvHTML, templateOptions as cvTemplates } from './js/templates/cv-ats.js';
@@ -20,7 +34,7 @@ registerDocumentType('surat-izin', { formFields: izinFields, generateHTML: izinH
 registerDocumentType('surat-kuasa', { formFields: kuasaFields, generateHTML: kuasaHTML, templateOptions: kuasaTemplates });
 
 // ============================================
-// Landing Page
+// Landing Page Rendering
 // ============================================
 function renderLandingPage() {
   const main = document.getElementById('main-content');
@@ -65,7 +79,6 @@ function renderLandingPage() {
 
     <!-- Adsterra Native Banner - Between Hero & Documents -->
     <div class="adsterra-native" id="adsterra-native-1">
-      <!-- PASTE KODE NATIVE BANNER ADSTERRA 300x250 atau 728x90 DI SINI -->
       <div class="ad-slot ad-slot-banner"><span class="ad-label">Adsterra Ad Space</span></div>
     </div>
 
@@ -117,7 +130,6 @@ function renderLandingPage() {
 
     <!-- Adsterra Native Banner - Between Steps & Premium -->
     <div class="adsterra-native" id="adsterra-native-2">
-      <!-- PASTE KODE NATIVE BANNER ADSTERRA 300x250 DI SINI -->
       <div class="ad-slot ad-slot-banner"><span class="ad-label">Adsterra Ad Space</span></div>
     </div>
 
@@ -153,7 +165,7 @@ function renderLandingPage() {
             <span class="badge badge-pro">PRO</span>
             <h2>Template Premium</h2>
             <p>Dapatkan akses ke template eksklusif dengan desain lebih profesional dan elegan.</p>
-            <button class="btn btn-premium" onclick="alert('Fitur premium coming soon! 🚀')">
+            <button class="btn btn-premium" id="btn-landing-premium">
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
               Lihat Template Premium
             </button>
@@ -192,7 +204,6 @@ function renderLandingPage() {
 
     <!-- Adsterra Native Banner - Bottom -->
     <div class="adsterra-native" id="adsterra-native-3">
-      <!-- PASTE KODE NATIVE BANNER ADSTERRA 728x90 DI SINI -->
       <div class="ad-slot ad-slot-banner"><span class="ad-label">Adsterra Ad Space</span></div>
     </div>
 
@@ -220,17 +231,171 @@ function renderLandingPage() {
           </details>
           <details class="faq-item glass">
             <summary class="faq-question">Apa itu template premium?</summary>
-            <p class="faq-answer">Template premium adalah desain eksklusif dengan tampilan lebih profesional dan elegan. Fitur ini coming soon!</p>
+            <p class="faq-answer">Template premium adalah desain eksklusif dengan tampilan lebih profesional dan elegan. Fitur ini bisa diaktifkan melalui upgrade ke PRO.</p>
           </details>
         </div>
       </div>
     </section>
   `;
+
+  // Landing page specific events
+  document.getElementById('btn-landing-premium')?.addEventListener('click', () => {
+    showModal('#premium-modal');
+  });
+
   observeAnimations();
 }
 
 // ============================================
-// Generator Page
+// Dashboard Rendering & Handler
+// ============================================
+async function handleDashboardRoute() {
+  const user = getCurrentUser();
+  if (!user) {
+    // If not logged in, redirect home and open auth modal
+    window.location.hash = '#/';
+    showModal('#auth-modal');
+    showToast('Silakan masuk terlebih dahulu!', 'error');
+    return;
+  }
+
+  const main = document.getElementById('main-content');
+  const navbar = document.querySelector('.navbar');
+  if (navbar) navbar.classList.add('navbar-compact');
+
+  main.innerHTML = `
+    <div class="container dashboard-container">
+      <h1 class="dashboard-title"><span class="gradient-text">Dashboard Pengguna</span></h1>
+      
+      <div class="dashboard-grid">
+        <!-- Profile Card -->
+        <div class="profile-card glass animate-fade-in">
+          <img src="${user.photoURL}" alt="Avatar" class="profile-card-avatar">
+          <div class="profile-card-name">${user.displayName}</div>
+          <div class="profile-card-email">${user.email}</div>
+          <div class="badge-account ${user.accountType === 'premium' ? 'badge-account-premium' : 'badge-account-free'}">
+            ${user.accountType === 'premium' ? '👑 PRO' : 'FREE'}
+          </div>
+          
+          <div class="profile-card-stats">
+            <div>
+              <div class="profile-stat-val" id="stats-draft-count">-</div>
+              <div class="profile-stat-lbl">Draf Dibuat</div>
+            </div>
+            <div>
+              <div class="profile-stat-val">${isFirebaseConfigured() ? 'Cloud' : 'Lokal'}</div>
+              <div class="profile-stat-lbl">Database</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Main Panel -->
+        <div class="dashboard-content-panel">
+          <!-- Upgrade Panel -->
+          ${user.accountType !== 'premium' ? `
+            <div class="billing-upgrade-banner glass animate-fade-in">
+              <div class="billing-upgrade-info">
+                <h4>Aktifkan Keanggotaan PRO 👑</h4>
+                <p>Buka semua template eksklusif, unduh PDF berkualitas tinggi, simpan cloud sepuasnya, dan hapus semua iklan.</p>
+              </div>
+              <button class="btn btn-premium" id="btn-upgrade-dashboard">Upgrade PRO</button>
+            </div>
+          ` : `
+            <div class="billing-upgrade-banner glass animate-fade-in" style="border-color: var(--success);">
+              <div class="billing-upgrade-info">
+                <h4>Selamat! Akun PRO Aktif 🎉</h4>
+                <p>Seluruh fitur premium Anda telah aktif selamanya. Terima kasih atas dukungan Anda!</p>
+              </div>
+            </div>
+          `}
+          
+          <!-- Drafts Panel -->
+          <div class="content-card glass animate-fade-in" style="--delay: 0.1s">
+            <div class="content-card-header">
+              <h3>Draf Dokumen Anda</h3>
+            </div>
+            <div class="drafts-list" id="dashboard-drafts-list">
+              <div class="empty-drafts">Memuat draf dokumen...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // Attach upgrade handler
+  document.getElementById('btn-upgrade-dashboard')?.addEventListener('click', () => {
+    showModal('#premium-modal');
+  });
+
+  // Load and render user drafts
+  await loadAndRenderDrafts(user);
+}
+
+async function loadAndRenderDrafts(user) {
+  const listContainer = document.getElementById('dashboard-drafts-list');
+  const statsCount = document.getElementById('stats-draft-count');
+  if (!listContainer) return;
+
+  const drafts = await getDraftsCloud();
+  if (statsCount) statsCount.textContent = drafts.length;
+
+  if (drafts.length === 0) {
+    listContainer.innerHTML = `
+      <div class="empty-drafts">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-bottom: var(--space-xs); opacity: 0.5;"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <p>Belum ada draf dokumen yang disimpan.</p>
+        <a href="#/" class="btn btn-ghost btn-sm" style="margin-top: var(--space-md); display: inline-flex;">Mulai Buat Dokumen</a>
+      </div>
+    `;
+    return;
+  }
+
+  const docMetadata = getDocumentTypes();
+
+  listContainer.innerHTML = drafts.map(draft => {
+    const meta = docMetadata[draft.docType] || { title: draft.docType, icon: '📄', color: '#7c3aed' };
+    const dateStr = new Date(draft.updatedAt).toLocaleDateString('id-ID', {
+      day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit'
+    });
+
+    return `
+      <div class="draft-item animate-fade-in">
+        <div class="draft-item-info">
+          <div class="draft-item-icon" style="color: ${meta.color}">${meta.icon}</div>
+          <div>
+            <div class="draft-item-title">${meta.title}</div>
+            <div class="draft-item-date">Terakhir diedit: ${dateStr}</div>
+          </div>
+        </div>
+        <div class="draft-item-actions">
+          <a href="#/generator/${draft.docType}" class="btn-icon" title="Edit Dokumen">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+          </a>
+          <button class="btn-icon btn-delete btn-delete-draft" data-type="${draft.docType}" title="Hapus Draf">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+          </button>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  // Attach delete handlers
+  listContainer.querySelectorAll('.btn-delete-draft').forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      const type = btn.dataset.type;
+      if (confirm('Apakah Anda yakin ingin menghapus draf ini?')) {
+        await deleteDraftCloud(type);
+        showToast('Draf berhasil dihapus.', 'success');
+        // Refresh list
+        loadAndRenderDrafts(user);
+      }
+    });
+  });
+}
+
+// ============================================
+// Generator Route Handler
 // ============================================
 function handleGeneratorRoute(params) {
   const main = document.getElementById('main-content');
@@ -265,13 +430,54 @@ function observeAnimations() {
 }
 
 // ============================================
-// Init
+// Modal Helper Functions
+// ============================================
+function showModal(selector) {
+  const modal = document.querySelector(selector);
+  if (modal) {
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeModal(selector) {
+  const modal = document.querySelector(selector);
+  if (modal) {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+}
+
+// ============================================
+// Navbar Auth State UI Updates
+// ============================================
+function updateNavbarAuth(user) {
+  const btnLogin = document.getElementById('nav-btn-login');
+  const profileMenu = document.getElementById('user-profile-menu');
+  const userAvatar = document.getElementById('user-avatar');
+  const userDisplayName = document.getElementById('user-display-name');
+
+  if (user) {
+    if (btnLogin) btnLogin.style.display = 'none';
+    if (profileMenu) profileMenu.style.display = 'inline-block';
+    if (userAvatar) userAvatar.src = user.photoURL;
+    if (userDisplayName) userDisplayName.textContent = user.displayName.split(' ')[0];
+  } else {
+    if (btnLogin) btnLogin.style.display = 'inline-block';
+    if (profileMenu) profileMenu.style.display = 'none';
+  }
+}
+
+// ============================================
+// Init Application
 // ============================================
 function initApp() {
   initTheme();
 
+  // Theme switch listener
   document.getElementById('theme-toggle')?.addEventListener('click', toggleTheme);
 
+  // Mobile menu toggle
   const menuToggle = document.getElementById('menu-toggle');
   const navLinks = document.getElementById('nav-links');
   if (menuToggle && navLinks) {
@@ -284,22 +490,199 @@ function initApp() {
     });
   }
 
-  // Navbar scroll effect
+  // Navbar scroll background effect
   window.addEventListener('scroll', () => {
     const navbar = document.querySelector('.navbar');
     if (navbar) navbar.classList.toggle('scrolled', window.scrollY > 50);
   });
 
+  // Navbar login trigger
+  document.getElementById('nav-btn-login')?.addEventListener('click', () => {
+    showModal('#auth-modal');
+  });
+
+  // Navbar profile menu trigger dropdown
+  const profileTrigger = document.getElementById('profile-trigger');
+  const profileMenu = document.getElementById('user-profile-menu');
+  if (profileTrigger && profileMenu) {
+    profileTrigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      profileMenu.classList.toggle('open');
+    });
+    document.addEventListener('click', () => {
+      profileMenu.classList.remove('open');
+    });
+  }
+
+  // Modal close handlers
+  document.getElementById('auth-modal-close')?.addEventListener('click', () => closeModal('#auth-modal'));
+  document.getElementById('premium-modal-close')?.addEventListener('click', () => closeModal('#premium-modal'));
+
+  // Close modals on clicking overlay
+  document.querySelectorAll('.modal').forEach(modal => {
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        closeModal('#' + modal.id);
+      }
+    });
+  });
+
+  // Auth Tab toggles inside Auth Modal
+  const authTabBtns = document.querySelectorAll('.auth-tab-btn');
+  authTabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tab = btn.dataset.authTab;
+      authTabBtns.forEach(b => b.classList.toggle('active', b === btn));
+      
+      document.querySelectorAll('.auth-form').forEach(form => {
+        form.classList.toggle('active', form.id === `${tab}-form`);
+      });
+    });
+  });
+
+  // Google Login submit handler
+  document.getElementById('btn-google-login')?.addEventListener('click', async () => {
+    try {
+      const btn = document.getElementById('btn-google-login');
+      btn.disabled = true;
+      btn.innerHTML = 'Menghubungkan Google...';
+      
+      await signInWithGoogle();
+      
+      closeModal('#auth-modal');
+      showToast('Masuk Akun Google Berhasil! 🎉', 'success');
+    } catch (e) {
+      showToast('Gagal masuk Google. Coba lagi.', 'error');
+      const btn = document.getElementById('btn-google-login');
+      btn.disabled = false;
+      btn.innerHTML = 'Google Account';
+    }
+  });
+
+  // Email Register form handler
+  document.getElementById('register-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = document.getElementById('reg-name').value;
+    const email = document.getElementById('reg-email').value;
+    const password = document.getElementById('reg-password').value;
+
+    if (password.length < 6) {
+      showToast('Password minimal 6 karakter!', 'error');
+      return;
+    }
+
+    try {
+      await signUpWithEmail(name, email, password);
+      closeModal('#auth-modal');
+      showToast('Pendaftaran Berhasil! 🎉', 'success');
+    } catch (err) {
+      showToast(err.message || 'Gagal mendaftar akun.', 'error');
+    }
+  });
+
+  // Email Login form handler
+  document.getElementById('login-form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-password').value;
+
+    try {
+      await loginWithEmail(email, password);
+      closeModal('#auth-modal');
+      showToast('Berhasil masuk ke akun!', 'success');
+    } catch (err) {
+      showToast(err.message || 'Email atau password salah.', 'error');
+    }
+  });
+
+  // Logout trigger
+  document.getElementById('btn-logout')?.addEventListener('click', async (e) => {
+    e.preventDefault();
+    if (confirm('Apakah Anda yakin ingin keluar dari akun?')) {
+      await signOutUser();
+      showToast('Anda telah keluar dari akun.', 'success');
+    }
+  });
+
+  // Premium Upgrade action inside modal
+  document.getElementById('btn-upgrade-now')?.addEventListener('click', async () => {
+    const user = getCurrentUser();
+    if (!user) {
+      closeModal('#premium-modal');
+      showModal('#auth-modal');
+      showToast('Silakan masuk terlebih dahulu!', 'error');
+      return;
+    }
+
+    const btn = document.getElementById('btn-upgrade-now');
+    btn.disabled = true;
+    btn.textContent = 'Memproses Pembayaran...';
+
+    setTimeout(async () => {
+      try {
+        await upgradeToPremium();
+        closeModal('#premium-modal');
+        showToast('Pembayaran Simulasi Berhasil! Selamat datang di PRO 👑', 'success');
+        
+        // Reload or update route if on dashboard
+        if (window.location.hash === '#/dashboard') {
+          handleDashboardRoute();
+        } else {
+          window.location.reload();
+        }
+      } catch (err) {
+        showToast('Gagal memproses upgrade.', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Upgrade ke PRO Sekarang';
+      }
+    }, 1500);
+  });
+
+  // Listen for premium upgrade prompt triggers from generator
+  document.addEventListener('premium:show-upgrade-modal', () => {
+    showModal('#premium-modal');
+  });
+
+  // Initialize Authentication State Listener
+  initAuth((user) => {
+    updateNavbarAuth(user);
+    
+    // If routing has been initialized, trigger route reload on auth change to sync screens
+    if (window.location.hash === '#/dashboard') {
+      handleDashboardRoute();
+    }
+  });
+
+  // Setup Routes
   registerRoute('/', handleHomeRoute);
+  registerRoute('/dashboard', handleDashboardRoute);
   registerRoute('/generator/:type', handleGeneratorRoute);
   initRouter();
 
+  // Internal hash navigation interceptor
   document.addEventListener('click', (e) => {
     const link = e.target.closest('a[href^="#"]');
-    if (link && !link.getAttribute('href').startsWith('#/')) {
-      const targetId = link.getAttribute('href').slice(1);
-      const target = document.getElementById(targetId);
-      if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+    if (link) {
+      const href = link.getAttribute('href');
+      if (!href.startsWith('#/')) {
+        const targetId = href.slice(1);
+        if (!targetId) return; // ignore empty href="#"
+        const target = document.getElementById(targetId);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth' });
+        } else {
+          e.preventDefault();
+          window.location.hash = '#/';
+          setTimeout(() => {
+            const newTarget = document.getElementById(targetId);
+            if (newTarget) {
+              newTarget.scrollIntoView({ behavior: 'smooth' });
+            }
+          }, 300);
+        }
+      }
     }
   });
 }

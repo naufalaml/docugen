@@ -319,27 +319,90 @@
 }
 
 /* ============================================
-   Responsive - Mobile Stack Layout
+   Responsive - Mobile Stack & Tabbed Layout
    ============================================ */
+.mobile-tabs-container {
+  display: none;
+}
+
 @media (max-width: 968px) {
+  .mobile-tabs-container {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-lg);
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--glass-border);
+    position: sticky;
+    top: 70px;
+    z-index: 99;
+  }
+  
+  .mobile-tab-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-xs);
+    padding: 0.6rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    color: var(--text-secondary);
+    font-weight: 600;
+    cursor: pointer;
+    font-family: var(--font-body);
+    transition: all var(--transition-fast);
+  }
+  
+  .mobile-tab-btn:hover {
+    color: var(--text-primary);
+  }
+  
+  .mobile-tab-btn.active {
+    background: var(--accent-primary);
+    border-color: var(--accent-primary);
+    color: white;
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+  }
+
   .generator-layout {
     grid-template-columns: 1fr;
+    padding-bottom: var(--space-2xl);
+  }
+  
+  /* Show only the active tab layout */
+  .generator-layout[data-active-tab="form"] .preview-panel {
+    display: none !important;
+  }
+  
+  .generator-layout[data-active-tab="preview"] .form-panel {
+    display: none !important;
   }
   
   .form-panel {
     position: static;
     max-height: none;
+    padding: var(--space-lg);
+  }
+  
+  .preview-panel {
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
   }
   
   .preview-scroll {
-    max-height: 600px;
+    max-height: calc(100vh - 210px);
+    padding: var(--space-md);
   }
   
   .a4-paper {
     width: 100%;
-    min-height: auto;
-    padding: 10mm 12mm;
-    font-size: 10pt;
+    min-height: 297mm;
+    padding: 15mm 15mm;
+    font-size: 10.5pt;
+    transform-origin: top center;
   }
 }
 
@@ -362,6 +425,11 @@
   
   .form-panel {
     padding: var(--space-md);
+  }
+  
+  .a4-paper {
+    padding: 10mm 10mm;
+    font-size: 9pt;
   }
 }
 
