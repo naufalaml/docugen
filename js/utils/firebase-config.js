@@ -2,9 +2,9 @@
 // DocuGen - Firebase Configuration
 // ============================================
 
-// Kredensial proyek Firebase Anda (diupdate otomatis dari tangkapan layar Anda)
+// Kredensial proyek Firebase Anda (diupdate otomatis dengan perbaikan typo API Key)
 export const firebaseConfig = {
-  apiKey: "AIzaSyABM-G_Y3RohgXD5KF9Cbs2OLRv7quU1x4",
+  apiKey: "AIzaSyABM-G_Y3RohgXD5KF9Cbs2OLRv7qUU1x4",
   authDomain: "docugen-486a2.firebaseapp.com",
   projectId: "docugen-486a2",
   storageBucket: "docugen-486a2.firebasestorage.app",
