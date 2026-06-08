@@ -19,9 +19,6 @@
 
 ## 🚀 Cara Pakai
 
-### Online
-Kunjungi website: [https://docugen.id](https://docugen.id)
-
 ### Lokal
 ```bash
 # Clone repository
@@ -35,24 +32,6 @@ python -m http.server 3000
 # http://localhost:3000
 ```
 
-## 💰 Monetisasi
-
-### Adsterra Ads
-Website sudah disiapkan slot iklan Adsterra:
-1. Daftar di [adsterra.com](https://www.adsterra.com)
-2. Tambahkan website kamu
-3. Pilih jenis iklan (Banner, Popunder, Native, Social Bar)
-4. Paste kode iklan di `index.html` pada slot yang sudah disediakan
-
-### Premium Template (Coming Soon)
-- Template eksklusif dengan desain profesional
-- Sistem pembayaran terintegrasi
-
-### Affiliate Links
-- Jasa cetak dokumen
-- Platform rekrutmen
-- Kursus online bersertifikat
-
 ## 🛠️ Tech Stack
 
 | Layer | Teknologi |
@@ -62,32 +41,6 @@ Website sudah disiapkan slot iklan Adsterra:
 | Font | Google Fonts (Plus Jakarta Sans + Inter) |
 | Deploy | Static hosting (GitHub Pages / Netlify / Vercel) |
 
-## 📁 Struktur Folder
-
-```
-docugen/
-├── index.html          # Landing page + SPA
-├── main.js             # App entry point
-├── css/
-│   ├── index.css       # Design system & global styles
-│   ├── components.css  # Reusable component styles
-│   └── generator.css   # Generator page styles
-├── js/
-│   ├── router.js       # Hash-based SPA router
-│   ├── pdf.js          # PDF generation module
-│   ├── generator.js    # Document generator logic
-│   ├── utils/
-│   │   ├── storage.js  # localStorage draft management
-│   │   └── theme.js    # Dark/light mode toggle
-│   └── templates/
-│       ├── surat-lamaran.js
-│       ├── cv-ats.js
-│       ├── surat-resign.js
-│       ├── surat-izin.js
-│       └── surat-kuasa.js
-├── .gitignore
-└── README.md
-```
 
 ## 📄 License
 
@@ -95,8 +48,8 @@ MIT License - Bebas digunakan dan dimodifikasi.
 
 ## 🤝 Kontribusi
 
-Pull request sangat welcome! Untuk perubahan besar, silakan buka issue terlebih dahulu.
+naufalaml
 
 ---
 
-Made with ❤️ in Indonesia
+Made with naufalaml in Indonesia
