@@ -34,6 +34,9 @@
   <!-- html2pdf.js via CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.2/html2pdf.bundle.min.js" defer></script>
 
+  <!-- Midtrans Snap JS (Sandbox) -->
+  <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="SB-Mid-client-d6x1xN9i-l-x9G3E" defer></script>
+
   <!-- ============================== -->
   <!-- ADSTERRA ADS INTEGRATION       -->
   <!-- ============================== -->
@@ -272,6 +275,60 @@
         Upgrade ke PRO Sekarang
       </button>
       <span class="secure-checkout">🔒 Pembayaran aman & simulasi instan</span>
+    </div>
+  </div>
+
+  <!-- ========== SIMULATED PAYMENT MODAL ========== -->
+  <div class="modal" id="simulated-payment-modal">
+    <div class="modal-content glass simulated-payment-content animate-slide-up">
+      <button class="modal-close" id="simulated-payment-modal-close" aria-label="Tutup modal">&times;</button>
+      <h3>Pilih Metode Pembayaran (Simulasi)</h3>
+      <p style="font-size: var(--text-xs); color: var(--text-secondary); margin-bottom: var(--space-md); margin-top: var(--space-xs);">
+        Mode uji coba lokal aktif. Silakan pilih metode pembayaran virtual di bawah.
+      </p>
+      
+      <div class="payment-methods-grid">
+        <label class="payment-method-item">
+          <input type="radio" name="mock-payment" value="qris" checked>
+          <div class="method-details">
+            <span class="method-name">QRIS (GoPay/OVO/Dana/LinkAja)</span>
+            <span class="method-desc">Bayar instan dengan scan QR Code</span>
+          </div>
+        </label>
+        
+        <label class="payment-method-item">
+          <input type="radio" name="mock-payment" value="va_bca">
+          <div class="method-details">
+            <span class="method-name">BCA Virtual Account</span>
+            <span class="method-desc">Transfer via ATM atau m-BCA</span>
+          </div>
+        </label>
+
+        <label class="payment-method-item">
+          <input type="radio" name="mock-payment" value="va_mandiri">
+          <div class="method-details">
+            <span class="method-name">Mandiri Virtual Account</span>
+            <span class="method-desc">Transfer via ATM atau Livin' Mandiri</span>
+          </div>
+        </label>
+        
+        <label class="payment-method-item">
+          <input type="radio" name="mock-payment" value="gopay">
+          <div class="method-details">
+            <span class="method-name">GoPay Klik</span>
+            <span class="method-desc">Pembayaran otomatis lewat aplikasi Gojek</span>
+          </div>
+        </label>
+      </div>
+
+      <div class="simulated-price-info" style="display: flex; justify-content: space-between; align-items: center; margin: var(--space-md) 0; padding: var(--space-sm) var(--space-md); background: rgba(0,0,0,0.1); border-radius: var(--radius-md);">
+        <span>Total Bayar:</span>
+        <strong style="color: var(--warning); font-size: var(--text-lg);">Rp 29.000</strong>
+      </div>
+
+      <button class="btn btn-premium btn-block" id="btn-pay-simulated">
+        Bayar Sekarang
+      </button>
     </div>
   </div>
 

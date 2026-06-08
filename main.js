@@ -618,13 +618,91 @@ function initApp() {
     btn.disabled = true;
     btn.textContent = 'Memproses Pembayaran...';
 
+    const orderId = 'PRO-' + user.uid.substring(0, 5) + '-' + Date.now();
+
+    try {
+      // 1. Panggil serverless function untuk meminta token Snap Midtrans
+      const response = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          orderId: orderId,
+          grossAmount: 29000,
+          email: user.email,
+          name: user.displayName
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Endpoint api/checkout tidak tersedia atau error');
+      }
+
+      const checkoutData = await response.json();
+
+      // 2. Buka widget Midtrans Snap asli jika library & token tersedia
+      if (window.snap && checkoutData.token) {
+        closeModal('#premium-modal');
+        window.snap.pay(checkoutData.token, {
+          onSuccess: async function(result) {
+            await upgradeToPremium();
+            showToast('Pembayaran Berhasil! Selamat datang di PRO 👑', 'success');
+            if (window.location.hash === '#/dashboard') {
+              handleDashboardRoute();
+            } else {
+              window.location.reload();
+            }
+          },
+          onPending: function(result) {
+            showToast('Menunggu pembayaran Anda.', 'warning');
+          },
+          onError: function(result) {
+            showToast('Pembayaran gagal. Coba lagi.', 'error');
+          },
+          onClose: function() {
+            showToast('Pembayaran dibatalkan.', 'warning');
+          }
+        });
+      } else {
+        throw new Error('Midtrans Snap SDK atau Token tidak ditemukan');
+      }
+
+    } catch (e) {
+      console.warn("Real Midtrans Gateway tidak terdeteksi, beralih ke simulasi lokal:", e);
+      // Fallback: Tampilkan Modal Pilihan Metode Pembayaran Simulasi
+      closeModal('#premium-modal');
+      showModal('#simulated-payment-modal');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Upgrade ke PRO Sekarang';
+    }
+  });
+
+  // Simulated Payment Modal Event Handlers
+  document.getElementById('simulated-payment-modal-close')?.addEventListener('click', () => {
+    closeModal('#simulated-payment-modal');
+  });
+
+  document.getElementById('btn-pay-simulated')?.addEventListener('click', async () => {
+    const btn = document.getElementById('btn-pay-simulated');
+    const selectedMethod = document.querySelector('input[name="mock-payment"]:checked')?.value || 'qris';
+    
+    btn.disabled = true;
+    btn.textContent = 'Memproses Pembayaran Virtual...';
+
     setTimeout(async () => {
       try {
         await upgradeToPremium();
-        closeModal('#premium-modal');
-        showToast('Pembayaran Simulasi Berhasil! Selamat datang di PRO 👑', 'success');
+        closeModal('#simulated-payment-modal');
         
-        // Reload or update route if on dashboard
+        let methodName = 'QRIS';
+        if (selectedMethod === 'va_bca') methodName = 'BCA VA';
+        if (selectedMethod === 'va_mandiri') methodName = 'Mandiri VA';
+        if (selectedMethod === 'gopay') methodName = 'GoPay';
+
+        showToast(`Pembayaran via ${methodName} Sukses! Selamat datang di PRO 👑`, 'success');
+        
         if (window.location.hash === '#/dashboard') {
           handleDashboardRoute();
         } else {
@@ -634,9 +712,9 @@ function initApp() {
         showToast('Gagal memproses upgrade.', 'error');
       } finally {
         btn.disabled = false;
-        btn.textContent = 'Upgrade ke PRO Sekarang';
+        btn.textContent = 'Bayar Sekarang';
       }
-    }, 1500);
+    }, 1200);
   });
 
   // Listen for premium upgrade prompt triggers from generator

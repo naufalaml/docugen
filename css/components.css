@@ -1617,3 +1617,64 @@
   font-size: var(--text-sm);
   color: var(--text-secondary);
 }
+
+/* ============================================
+   Simulated Payment Modal Styles
+   ============================================ */
+.simulated-payment-content {
+  max-width: 440px;
+}
+
+.payment-methods-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+  max-height: 280px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.payment-method-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  background: rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+[data-theme="light"] .payment-method-item {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.payment-method-item:hover {
+  border-color: var(--accent-primary);
+  background: rgba(124, 58, 237, 0.04);
+}
+
+.payment-method-item input[type="radio"] {
+  accent-color: var(--accent-primary);
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.method-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.method-name {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.method-desc {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+}
