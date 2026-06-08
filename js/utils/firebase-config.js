@@ -2,13 +2,13 @@
 // DocuGen - Firebase Configuration
 // ============================================
 
-// Salin kredensial proyek Firebase Anda dari Firebase Console di sini.
-// Aktifkan Firebase Authentication (Google & Email) dan Cloud Firestore di dashboard Firebase Anda.
+// Kredensial proyek Firebase Anda (diupdate otomatis dari tangkapan layar Anda)
 export const firebaseConfig = {
-  apiKey: "PLACEHOLDER_API_KEY",
-  authDomain: "PLACEHOLDER_AUTH_DOMAIN",
-  projectId: "PLACEHOLDER_PROJECT_ID",
-  storageBucket: "PLACEHOLDER_STORAGE_BUCKET",
-  messagingSenderId: "PLACEHOLDER_MESSAGING_SENDER_ID",
-  appId: "PLACEHOLDER_APP_ID"
+  apiKey: "AIzaSyABM-G_Y3RohgXD5KF9Cbs2OLRv7quU1x4",
+  authDomain: "docugen-486a2.firebaseapp.com",
+  projectId: "docugen-486a2",
+  storageBucket: "docugen-486a2.firebasestorage.app",
+  messagingSenderId: "708785207222",
+  appId: "1:708785207222:web:e17e235c0ae67eb22e3317",
+  measurementId: "G-3NXJPD56QN"
 };
