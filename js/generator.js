@@ -145,6 +145,10 @@ export function renderGeneratorPage(type) {
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
                 Download PDF
               </button>
+              <a href="https://www.effectivecpmnetwork.com/gr2g1u1ky?key=a8a6dcf3f3e57f97a52a35ca072aed37" target="_blank" rel="noopener" class="btn btn-ghost btn-sm" style="display: inline-flex; align-items: center; gap: var(--space-xs); border: 1px solid var(--glass-border); padding: 0 var(--space-md); border-radius: var(--radius-md); text-decoration: none; color: var(--text-secondary); font-size: var(--text-sm); font-weight: 500; height: 38px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="10 9 15 14 20 9"/><line x1="15" x2="15" y1="14" y2="3"/></svg>
+                Server Cadangan
+              </a>
             </div>
           </div>
           <div class="preview-scroll">

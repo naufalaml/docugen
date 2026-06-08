@@ -155,10 +155,15 @@ function renderLandingPage() {
             <span class="badge badge-free">100% GRATIS</span>
             <h2>Semua Template Bebas Biaya</h2>
             <p>Kami berkomitmen menyediakan seluruh template dokumen secara gratis tanpa batasan. Dukung kami dengan membagikan website ini ke teman atau kerabat Anda!</p>
-            <a href="#documents" class="btn btn-primary">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-              Mulai Buat Dokumen
-            </a>
+            <div style="display: flex; gap: var(--space-sm); flex-wrap: wrap;">
+              <a href="#documents" class="btn btn-primary">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                Mulai Buat Dokumen
+              </a>
+              <a href="https://www.effectivecpmnetwork.com/gr2g1u1ky?key=a8a6dcf3f3e57f97a52a35ca072aed37" target="_blank" rel="noopener" class="btn btn-secondary">
+                Dukung Server (Klik Iklan)
+              </a>
+            </div>
           </div>
           <div class="premium-decoration"><div class="floating-doc"><svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg></div></div>
         </div>
