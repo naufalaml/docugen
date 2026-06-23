@@ -1,7 +1,4 @@
-// ============================================
-// DocuGen - Vercel Serverless Function: Midtrans Checkout
-// Endpoint: /api/checkout
-// ============================================
+
 
 export default async function handler(req, res) {
   // CORS Headers
@@ -18,9 +15,6 @@ export default async function handler(req, res) {
   }
 
   const { orderId, grossAmount, email, name } = req.body;
-
-  // Ambil server key dari Environment Variables Vercel/Netlify
-  // Kunci default di bawah ini adalah kunci testing Sandbox jika tidak diset di env
   const serverKey = process.env.MIDTRANS_SERVER_KEY || 'SB-Mid-server-PlW3U6g4UqM2sA2Q5lE8Z9R_'; 
   const isProduction = process.env.MIDTRANS_IS_PRODUCTION === 'true';
 
